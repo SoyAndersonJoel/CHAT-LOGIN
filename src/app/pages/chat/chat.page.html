@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Chat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let msg of messages">
+      <ion-label>
+        <h3>{{ msg.email }}</h3>
+        <p>{{ msg.content }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-footer>
+    <ion-toolbar>
+      <ion-input [(ngModel)]="newMessage" placeholder="Escribe un mensaje..."></ion-input>
+      <ion-button (click)="sendMessage()">Enviar</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
