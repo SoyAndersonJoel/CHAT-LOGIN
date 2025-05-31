@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, IonContent } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { supabase } from 'src/app/supabase.client';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   imports: [CommonModule, IonicModule, FormsModule],
 })
 export class ChatPage implements OnInit, OnDestroy {
+  @ViewChild('content', { static: false }) content!: IonContent; // Corregido
   messages: any[] = [];
   newMessage = '';
   email = '';
@@ -29,7 +30,6 @@ export class ChatPage implements OnInit, OnDestroy {
     }
 
     this.email = data.user.email ?? '';
-
     this.userId = data.user.id;
 
     await this.loadMessages();
@@ -49,25 +49,26 @@ export class ChatPage implements OnInit, OnDestroy {
 
   async sendMessage() {
     if (!this.newMessage.trim()) return;
-  
+
     const { data, error } = await supabase.from('messages').insert({
       content: this.newMessage,
       email: this.email,
       user_id: this.userId,
-    }).select(); // <- Esto devuelve el mensaje insertado
-  
+    }).select(); 
+
     if (error) {
       console.error('Error al enviar mensaje:', error.message);
       return;
     }
-  
-    if (data && data.length > 0) {
-      this.messages.push(data[0]); // <- Agrega el mensaje a la lista local
-    }
-  
     this.newMessage = '';
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 100); // Espera un poco para que el DOM se actualice
   }
   
+  scrollToBottom() {
+    this.content.scrollToBottom(500); // Desplazamiento suave en 300ms
+  }
 
   listenToNewMessages() {
     this.channel = supabase

@@ -1,0 +1,42 @@
+.my-message,
+.other-message {
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px 0;
+}
+
+.other-message {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 75%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.my-message .message-bubble {
+  background-color: #25d366;
+  color: white;
+  border-radius: 15px 15px 0 15px;
+}
+
+.other-message .message-bubble {
+  background-color: #e9e9eb;
+  color: black;
+  border-radius: 15px 15px 15px 0;
+}
